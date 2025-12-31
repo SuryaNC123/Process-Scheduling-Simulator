@@ -134,10 +134,32 @@ th {
     font-family: 'JetBrains Mono', monospace;
 }
 
-.dashboard-stack {
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.logs-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.logs-details summary {
+    list-style: none;
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logs-details summary::after {
+    content: "▼";
+    font-size: 0.8rem;
+    transition: transform 0.2s;
+}
+
+.logs-details[open] summary::after {
+    transform: rotate(180deg);
 }
 
 .metric-card {
