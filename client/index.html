@@ -95,10 +95,10 @@
                                 <th>Arrival</th>
                                 <th>Burst</th>
                                 <th>Priority</th>
-                                <th title="Completion Time">CT <span class="info-icon">i</span></th>
-                                <th title="Turnaround Time">TAT <span class="info-icon">i</span></th>
-                                <th title="Waiting Time">WT <span class="info-icon">i</span></th>
-                                <th title="Response Time">RT <span class="info-icon">i</span></th>
+                                    <th title="Completion Time (CT): The time at which the process finishes its execution. (CT = Start Time + Burst Time)">CT <span class="info-icon">i</span></th>
+                                    <th title="Turnaround Time (TAT): Total time taken from arrival to completion. (TAT = CT - AT)">TAT <span class="info-icon">i</span></th>
+                                    <th title="Waiting Time (WT): Total time spent waiting in the ready queue. (WT = TAT - BT)">WT <span class="info-icon">i</span></th>
+                                    <th title="Response Time (RT): Time from arrival to the first CPU allocation. (RT = First Response - AT)">RT <span class="info-icon">i</span></th>
                             </tr>
                         </thead>
                         <tbody id="result-body"></tbody>
