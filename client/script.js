@@ -211,7 +211,19 @@ function displayResults(data) {
 
 function renderGanttChart(ganttData) {
     ganttChart.innerHTML = '';
+    const ganttTimeScale = document.getElementById('gantt-time-scale');
+    ganttTimeScale.innerHTML = '';
+    
+    if (ganttData.length === 0) return;
+    
     const totalTime = ganttData[ganttData.length - 1].end;
+    
+    // Add start time (0)
+    const startMarker = document.createElement('div');
+    startMarker.className = 'time-marker';
+    startMarker.style.left = '0%';
+    startMarker.textContent = '0';
+    ganttTimeScale.appendChild(startMarker);
     
     ganttData.forEach(block => {
         const div = document.createElement('div');
@@ -235,6 +247,14 @@ function renderGanttChart(ganttData) {
         
         div.title = `Start: ${block.start}, End: ${block.end}, Duration: ${duration}`;
         ganttChart.appendChild(div);
+        
+        // Add end time marker for this block
+        const endMarker = document.createElement('div');
+        endMarker.className = 'time-marker';
+        const endPosition = (block.end / totalTime) * 100;
+        endMarker.style.left = `${endPosition}%`;
+        endMarker.textContent = block.end;
+        ganttTimeScale.appendChild(endMarker);
     });
 }
 
