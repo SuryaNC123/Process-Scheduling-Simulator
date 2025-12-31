@@ -1,0 +1,104 @@
+I already have a working CPU Process Scheduling Simulator built using HTML, CSS, and Vanilla JavaScript.
+
+Currently implemented and WORKING:
+- Process input UI (PID, Arrival Time, Burst Time, Priority)
+- Algorithm selection (FCFS, SJF, Priority, Round Robin)
+- Scheduling logic
+- Gantt Chart visualization
+- Detailed metrics table (CT, TAT, WT, RT)
+- Average Waiting, Turnaround, and Response Time
+
+I now want to EXTEND the existing project by ADDING ONLY the features listed below.
+DO NOT remove or break existing functionality.
+
+--------------------------------------------------
+FEATURES TO ADD (FINAL CONFIRMED LIST)
+--------------------------------------------------
+
+1. CPU Idle Time Handling
+- Detect time gaps when no process is ready
+- Insert explicit "IDLE" blocks in the Gantt chart
+- Calculate and store total CPU idle time
+- Show idle blocks with a distinct color and label
+
+2. Context Switch Tracking
+- Count context switches
+- Increment count whenever CPU switches from one process to another
+- Display context switch count in summary dashboard
+- Optionally mark context switch points in Gantt chart
+
+3. Ready Queue Visualization
+- Add a small panel to show the Ready Queue
+- Update it dynamically as time progresses
+- Display queue contents like: [P2, P4, P5]
+
+4. Algorithm Explanation Box
+- Show a short explanation for the selected scheduling algorithm
+- Include:
+  - How it works
+  - Preemptive or non-preemptive nature
+  - When it is best used
+- Update explanation dynamically on algorithm change
+
+5. Summary Dashboard
+Create a dashboard section displaying:
+- Total CPU Time
+- Total CPU Idle Time
+- CPU Utilization (%)
+- Number of Context Switches
+- Algorithm Efficiency Score (based on Avg WT, Avg TAT, Utilization)
+
+6. Algorithm Comparison Mode
+- Add a "Compare Algorithms" button
+- Run FCFS, SJF, Priority, and Round Robin on the SAME input
+- Display a comparison table with:
+  - Average Waiting Time
+  - Average Turnaround Time
+  - CPU Utilization
+  - Context Switches
+- Highlight the best-performing algorithm
+
+7. Execution Logs Panel
+- Display time-based logs such as:
+  - "Time 2: P3 arrived"
+  - "Time 4: P2 preempted P1"
+  - "Time 10: P1 completed"
+- Append logs dynamically during simulation
+
+8. Timeline Replay Slider
+- Add a slider to replay the simulation step-by-step
+- Slider movement should update:
+  - Current running process
+  - Ready queue
+  - Highlighted Gantt chart block
+
+9. UI Enhancements
+- Reset / Reload simulation button
+- Dark Mode / Light Mode toggle (CSS-based)
+- Proper input validation messages
+- Clean and professional layout
+
+--------------------------------------------------
+IMPLEMENTATION RULES
+--------------------------------------------------
+- Use ONLY HTML, CSS, and Vanilla JavaScript
+- No backend, no database, no frameworks
+- Extend existing files (do not rewrite)
+- Add code incrementally and safely
+- Comment all new logic clearly
+- Keep code beginner-friendly and readable
+
+--------------------------------------------------
+START BY:
+--------------------------------------------------
+1. Identifying existing functions
+2. Extending logic for idle time and context switch tracking
+3. Adding new HTML sections for:
+   - Dashboard
+   - Ready Queue
+   - Logs
+   - Comparison
+4. Ensuring existing simulation still works
+
+Generate changes step by step.
+DO NOT overwrite working code.
