@@ -98,24 +98,55 @@ function solve(algo, procs, tq = 2) {
 function runSimulation() {
     const procs = getInputs();
     const algo = document.getElementById('algorithm-select').value;
-    const tq = parseInt(document.getElementById('time-quantum').value) || 2;
+    const tqInput = document.getElementById('time-quantum');
+    const tq = parseInt(tqInput.value);
+
+    if (algo === 'ROUND_ROBIN') {
+        if (isNaN(tq) || tq <= 0) {
+            alert("Please enter a valid Time Quantum (greater than 0) for Round Robin.");
+            tqInput.focus();
+            return;
+        }
+    }
+
+    if (procs.length === 0) {
+        alert("Please add valid processes.");
+        return;
+    }
+
     const res = solve(algo, procs, tq);
     render(res);
 }
 
-function compareAll() {
-    const algos = Object.keys(ALGO_INFO);
-    comparisonSection.style.display = 'block';
-    comparisonBody.innerHTML = '';
-    let results = algos.map(a => ({ algo: a, ...solve(a, getInputs(), 2) }));
-    results.forEach(r => {
-        const avgWt = (r.procs.reduce((s,p)=>s+p.wt,0)/r.procs.length).toFixed(2);
-        const avgTat = (r.procs.reduce((s,p)=>s+p.tat,0)/r.procs.length).toFixed(2);
-        const idle = r.gantt.filter(b=>b.type==='idle').reduce((s,b)=>s+(b.end-b.start),0);
-        const util = (((r.gantt[r.gantt.length-1].end - idle)/r.gantt[r.gantt.length-1].end)*100).toFixed(1);
-        comparisonBody.innerHTML += `<tr><td>${r.algo}</td><td>${avgTat}</td><td>${avgWt}</td><td>${util}%</td><td>${r.cs}</td></tr>`;
-    });
+function updateExplanation() {
+    const algo = document.getElementById('algorithm-select').value;
+    const tqGroup = document.getElementById('time-quantum-group');
+    const tqInput = document.getElementById('time-quantum');
+    const info = ALGO_INFO[algo];
+    
+    document.getElementById('algorithm-explanation').innerHTML = `<strong>${info.name}</strong> (${info.preemptive ? 'P' : 'NP'}): ${info.desc} <em>${info.use}</em>`;
+    
+    if (algo === 'ROUND_ROBIN') {
+        tqGroup.style.display = 'flex';
+        tqInput.required = true;
+        tqInput.disabled = false;
+        if (!tqInput.value) tqInput.value = 2;
+    } else {
+        tqGroup.style.display = 'none';
+        tqInput.required = false;
+        tqInput.disabled = true;
+        tqInput.value = ''; 
+    }
 }
+
+// Listeners
+document.getElementById('add-process-btn').onclick = () => addRow();
+document.getElementById('simulate-btn').onclick = runSimulation;
+document.getElementById('reset-btn').onclick = reset;
+document.getElementById('theme-toggle').onclick = () => document.body.classList.toggle('dark-mode');
+document.getElementById('algorithm-select').onchange = updateExplanation;
+updateExplanation(); 
+
 
 // Replay Logic
 let currentStep = 0;
@@ -212,6 +243,7 @@ function renderGanttChart(ganttData, total) {
 }
 
 
-function reset() { simulationResults.style.display = 'none'; comparisonSection.style.display = 'none'; processBody.innerHTML = ''; addRow(0, 5); addRow(1, 3); }
+function reset() { simulationResults.style.display = 'none'; processBody.innerHTML = ''; addRow(0, 5); addRow(1, 3); }
 
-addRow(0, 5); addRow(1, 3); updateExplanation();
+addRow(0, 5); addRow(1, 3);
+updateExplanation();
