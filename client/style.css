@@ -164,13 +164,19 @@ th {
 
 .metric-card {
     background: rgba(0,0,0,0.02);
-    padding: 12px;
+    padding: 12px 24px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
+    min-width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
 }
 
-.metric-value { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); }
-.metric-label { font-size: 0.8rem; opacity: 0.8; }
+.metric-value { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); order: 2; }
+.metric-label { font-size: 0.85rem; opacity: 0.8; font-weight: 600; order: 1; }
 
 .gantt-container { margin: 24px 0; overflow-x: auto; }
 .gantt-chart { display: flex; height: 50px; border: 1px solid var(--border-color); border-radius: 4px; }
