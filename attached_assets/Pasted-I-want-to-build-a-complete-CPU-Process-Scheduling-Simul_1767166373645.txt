@@ -1,0 +1,122 @@
+I want to build a complete CPU Process Scheduling Simulator as a beginner-friendly but academically strong BTech project.
+
+Project type:
+- Software-only simulation project (no hardware, no backend server)
+- Core Computer Science project based on Operating Systems and Algorithms
+- Technologies to use: HTML, CSS, Vanilla JavaScript only
+
+Project requirements:
+
+1. User Interface (Input Area)
+- Form to enter number of processes
+- Dynamic table to input:
+  - Process ID (P1, P2, ...)
+  - Arrival Time
+  - Burst Time
+  - Priority (for Priority Scheduling)
+- Input field for Time Quantum (only for Round Robin)
+- Dropdown to select scheduling algorithm:
+  - FCFS
+  - SJF (Non-Preemptive)
+  - SJF (Preemptive)
+  - Priority (Non-Preemptive)
+  - Priority (Preemptive)
+  - Round Robin
+- Buttons:
+  - Simulate
+  - Reset
+- Proper input validation with error messages
+
+2. Scheduling Algorithms (Core Logic in JavaScript)
+Implement the following algorithms accurately:
+- FCFS
+- SJF Non-Preemptive
+- SJF Preemptive
+- Priority Non-Preemptive
+- Priority Preemptive
+- Round Robin
+
+The logic should:
+- Maintain a ready queue
+- Handle arrival time correctly
+- Handle CPU idle time
+- Handle preemption
+- Count context switches
+- Simulate time unit by unit
+
+3. Gantt Chart Visualization
+- Display a visual Gantt chart after simulation
+- Each process block should be color-coded
+- Show start and end time labels
+- Show CPU idle blocks clearly
+- Show context switch points visually
+
+4. Process Result Table
+Display a table with:
+- PID, Arrival Time, Burst Time, Priority
+- Completion Time (CT)
+- Turnaround Time (TAT)
+- Waiting Time (WT)
+- Response Time (RT)
+- Also calculate:
+  - Average WT
+  - Average TAT
+  - Average RT
+
+5. Ready Queue Visualization
+- Display current ready queue during simulation
+- Update it as time progresses
+
+6. Algorithm Explanation Box
+- Show a short explanation of the selected scheduling algorithm on the UI
+
+7. Summary Dashboard
+Display:
+- Total CPU time
+- CPU idle time
+- CPU utilization (%)
+- Number of context switches
+- Algorithm efficiency score
+
+8. Algorithm Comparison Mode
+- Compare FCFS, SJF, Priority, and Round Robin for the same input
+- Show comparison table with:
+  - Average WT
+  - Average TAT
+  - CPU utilization
+  - Context switches
+- Highlight best-performing algorithm
+
+9. Performance Charts
+- Bar chart comparing:
+  - Average Waiting Time
+  - Average Turnaround Time
+  - CPU Utilization
+- Pie chart showing CPU Busy Time vs Idle Time
+
+10. Extra Features
+- Detailed execution logs (time-based events)
+- Timeline slider to replay simulation
+- Reset simulation functionality
+- Dark mode / light mode toggle
+- Option to export results (CSV or PDF if possible)
+
+Project structure:
+- index.html
+- style.css
+- script.js
+- Separate JS functions for each scheduling algorithm
+- Clean, commented, readable code
+- Beginner-friendly structure
+
+Important notes:
+- Do NOT use React, backend frameworks, or databases
+- Everything should run in the browser
+- Focus on clarity, correctness, and visualization
+- This project is for BTech evaluation and viva
+
+Start by generating:
+1) Basic folder structure
+2) index.html skeleton with input form and placeholders
+3) style.css basic layout
+4) script.js with empty function stubs for algorithms
