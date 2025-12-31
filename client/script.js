@@ -169,13 +169,17 @@ function render(res) {
     const avgCt = (res.procs.reduce((s, p) => s + p.ct, 0) / res.procs.length).toFixed(2);
 
     summaryDashboard.innerHTML = `
-        <div class="metric-card"><div class="metric-value">${total}</div><div class="metric-label">Total Time</div></div>
-        <div class="metric-card"><div class="metric-value">${util}%</div><div class="metric-label">CPU Utilization</div></div>
-        <div class="metric-card"><div class="metric-value">${res.cs}</div><div class="metric-label">Context Switches</div></div>
-        <div class="metric-card"><div class="metric-value">${avgTat}</div><div class="metric-label">Avg TAT</div></div>
-        <div class="metric-card"><div class="metric-value">${avgWt}</div><div class="metric-label">Avg WT</div></div>
-        <div class="metric-card"><div class="metric-value">${avgRt}</div><div class="metric-label">Avg RT</div></div>
-        <div class="metric-card"><div class="metric-value">${avgCt}</div><div class="metric-label">Avg CT</div></div>
+        <div style="grid-column: 1 / -1; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <div class="metric-card"><div class="metric-value">${avgTat}</div><div class="metric-label">Avg TAT</div></div>
+            <div class="metric-card"><div class="metric-value">${avgWt}</div><div class="metric-label">Avg WT</div></div>
+            <div class="metric-card"><div class="metric-value">${avgRt}</div><div class="metric-label">Avg RT</div></div>
+            <div class="metric-card"><div class="metric-value">${avgCt}</div><div class="metric-label">Avg CT</div></div>
+        </div>
+        <div style="grid-column: 1 / -1; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <div class="metric-card"><div class="metric-value">${total}</div><div class="metric-label">Total Time</div></div>
+            <div class="metric-card"><div class="metric-value">${res.cs}</div><div class="metric-label">Context Switches</div></div>
+            <div class="metric-card"><div class="metric-value">${util}%</div><div class="metric-label">CPU Utilization</div></div>
+        </div>
     `;
 
     // Logs
