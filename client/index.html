@@ -59,7 +59,6 @@
                 <div class="action-buttons">
                     <button id="add-process-btn" class="btn btn-secondary">+ Add Process</button>
                     <div class="main-actions">
-                        <button id="compare-btn" class="btn btn-secondary">Compare All</button>
                         <button id="reset-btn" class="btn btn-danger">Reset</button>
                         <button id="simulate-btn" class="btn btn-primary">Simulate</button>
                     </div>
@@ -73,9 +72,6 @@
                     <h2>Simulation Results</h2>
                     <div id="algorithm-explanation" class="explanation-box"></div>
                     
-                    <h3>Ready Queue</h3>
-                    <div id="ready-queue" class="queue-panel">[Empty]</div>
-
                     <h3>Gantt Chart</h3>
                     <div id="slider-container" class="form-group" style="margin-bottom: 10px;">
                         <label for="replay-slider">Replay Simulation:</label>
@@ -115,24 +111,6 @@
                         <h2>Execution Logs</h2>
                         <div id="execution-logs" class="logs-panel"></div>
                     </div>
-                </div>
-            </div>
-
-            <div id="comparison-section" class="card" style="display: none;">
-                <h2>Algorithm Comparison</h2>
-                <div class="table-container">
-                    <table id="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Algorithm</th>
-                                <th>Avg TAT</th>
-                                <th>Avg WT</th>
-                                <th>Utilization</th>
-                                <th>CS</th>
-                            </tr>
-                        </thead>
-                        <tbody id="comparison-body"></tbody>
-                    </table>
                 </div>
             </div>
         </section>

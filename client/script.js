@@ -27,7 +27,6 @@ const ALGO_INFO = {
 document.getElementById('add-process-btn').onclick = () => addRow();
 document.getElementById('simulate-btn').onclick = runSimulation;
 document.getElementById('reset-btn').onclick = reset;
-document.getElementById('compare-btn').onclick = compareAll;
 document.getElementById('theme-toggle').onclick = () => document.body.classList.toggle('dark-mode');
 document.getElementById('algorithm-select').onchange = updateExplanation;
 
@@ -153,7 +152,6 @@ function updateReplay(step) {
 
 function render(res) {
     simulationResults.style.display = 'block';
-    comparisonSection.style.display = 'none';
     
     // Gantt
     const total = res.gantt[res.gantt.length-1].end;
@@ -165,15 +163,23 @@ function render(res) {
     // Summary
     const idle = res.gantt.filter(b=>b.type==='idle').reduce((s,b)=>s+(b.end-b.start),0);
     const util = (((total - idle)/total)*100).toFixed(1);
+    const avgTat = (res.procs.reduce((s, p) => s + p.tat, 0) / res.procs.length).toFixed(2);
+    const avgWt = (res.procs.reduce((s, p) => s + p.wt, 0) / res.procs.length).toFixed(2);
+    const avgRt = (res.procs.reduce((s, p) => s + (p.rt === -1 ? 0 : p.rt), 0) / res.procs.length).toFixed(2);
+    const avgCt = (res.procs.reduce((s, p) => s + p.ct, 0) / res.procs.length).toFixed(2);
+
     summaryDashboard.innerHTML = `
         <div class="metric-card"><div class="metric-value">${total}</div><div class="metric-label">Total Time</div></div>
         <div class="metric-card"><div class="metric-value">${util}%</div><div class="metric-label">CPU Utilization</div></div>
         <div class="metric-card"><div class="metric-value">${res.cs}</div><div class="metric-label">Context Switches</div></div>
+        <div class="metric-card"><div class="metric-value">${avgTat}</div><div class="metric-label">Avg TAT</div></div>
+        <div class="metric-card"><div class="metric-value">${avgWt}</div><div class="metric-label">Avg WT</div></div>
+        <div class="metric-card"><div class="metric-value">${avgRt}</div><div class="metric-label">Avg RT</div></div>
+        <div class="metric-card"><div class="metric-value">${avgCt}</div><div class="metric-label">Avg CT</div></div>
     `;
 
-    // Logs & Queue
+    // Logs
     logsEl.innerHTML = res.logs.map(l => `<div>${l}</div>`).join('');
-    readyQueueEl.innerText = `[ ${res.procs.filter(p => p.rem > 0).map(p => p.pid).join(', ')} ]`;
     
     setupSlider(res.gantt);
 }
