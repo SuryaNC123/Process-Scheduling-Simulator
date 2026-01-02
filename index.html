@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPU Process Scheduling Simulator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CPU Process Scheduling Simulator</h1>
+            <p>A pure JavaScript simulation for Operating Systems</p>
+        </header>
+
+        <section id="input-section">
+            <div class="card">
+                <h2>Configuration</h2>
+                <div class="control-panel">
+                    <div class="form-group">
+                        <label for="algorithm-select">Scheduling Algorithm:</label>
+                        <select id="algorithm-select">
+                            <option value="FCFS">First Come First Serve (FCFS)</option>
+                            <option value="SJF_NON_PREEMPTIVE">Shortest Job First (Non-Preemptive)</option>
+                            <option value="SJF_PREEMPTIVE">Shortest Job First (Preemptive)</option>
+                            <option value="PRIORITY_NON_PREEMPTIVE">Priority (Non-Preemptive)</option>
+                            <option value="PRIORITY_PREEMPTIVE">Priority (Preemptive)</option>
+                            <option value="ROUND_ROBIN">Round Robin</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="time-quantum-group" style="display: none;">
+                        <label for="time-quantum">Time Quantum (TQ):</label>
+                        <input type="number" id="time-quantum" min="1" value="2" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button id="theme-toggle" class="btn btn-secondary">Toggle Dark Mode</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Process List</h2>
+                <table id="process-table">
+                    <thead>
+                        <tr>
+                            <th>Process ID</th>
+                            <th>Arrival Time</th>
+                            <th>Burst Time</th>
+                            <th>Priority (Lower # = Higher)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="process-body">
+                        <!-- Rows will be added here via JS -->
+                    </tbody>
+                </table>
+                
+                <div class="action-buttons">
+                    <div class="main-actions" style="display: flex; gap: 12px; width: 100%; justify-content: center;">
+                        <button id="add-process-btn" class="btn btn-secondary">+ Add Process</button>
+                        <button id="reset-btn" class="btn btn-danger">Reset</button>
+                        <button id="simulate-btn" class="btn btn-primary">Simulate</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulation-results" style="display: none;">
+            <div class="card">
+                <h2>Simulation Results</h2>
+                <div id="algorithm-explanation" class="explanation-box"></div>
+                
+                <h3>Gantt Chart</h3>
+                <div class="gantt-container">
+                    <div id="gantt-chart" class="gantt-chart"></div>
+                    <div id="gantt-time-scale" class="gantt-time-scale"></div>
+                </div>
+
+                <details class="logs-details" style="margin-top: 20px;">
+                    <summary style="cursor: pointer; font-weight: 600; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 6px;">View Execution Logs</summary>
+                    <div id="execution-logs" class="logs-panel" style="margin-top: 10px;"></div>
+                </details>
+
+                <h3 style="margin-top: 30px;">Detailed Metrics</h3>
+                <div class="table-container">
+                    <table id="result-table">
+                        <thead>
+                            <tr>
+                                <th>PID</th>
+                                <th>Arrival</th>
+                                <th>Burst</th>
+                                <th>Priority</th>
+                                    <th title="Completion Time (CT): The time at which the process finishes its execution. (CT = Start Time + Burst Time)">CT <span class="info-icon">i</span></th>
+                                    <th title="Turnaround Time (TAT): Total time taken from arrival to completion. (TAT = CT - AT)">TAT <span class="info-icon">i</span></th>
+                                    <th title="Waiting Time (WT): Total time spent waiting in the ready queue. (WT = TAT - BT)">WT <span class="info-icon">i</span></th>
+                                    <th title="Response Time (RT): Time from arrival to the first CPU allocation. (RT = First Response - AT)">RT <span class="info-icon">i</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="result-body"></tbody>
+                    </table>
+                </div>
+
+                <h3 style="margin-top: 30px;">Summary Dashboard</h3>
+                <div id="summary-dashboard" class="dashboard" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;"></div>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
