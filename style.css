@@ -1,0 +1,188 @@
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary-color: #64748b;
+    --danger-color: #ef4444;
+    --danger-hover: #dc2626;
+    --success-color: #22c55e;
+    --background-color: #f1f5f9;
+    --card-bg: #ffffff;
+    --text-color: #0f172a;
+    --border-color: #e2e8f0;
+    --idle-bg: #cbd5e1;
+    --idle-text: #475569;
+}
+
+body.dark-mode {
+    --background-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-color: #f1f5f9;
+    --border-color: #334155;
+    --secondary-color: #94a3b8;
+    --idle-bg: #334155;
+    --idle-text: #94a3b8;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 24px;
+}
+
+.control-panel {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 200px;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+}
+
+@media (max-width: 900px) {
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: rgba(0,0,0,0.02);
+    font-weight: 600;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-primary { background: var(--primary-color); color: white; }
+.btn-secondary { background: var(--secondary-color); color: white; }
+.btn-danger { background: var(--danger-color); color: white; }
+
+.queue-panel {
+    background: rgba(0,0,0,0.05);
+    padding: 12px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 20px;
+}
+
+.logs-panel {
+    height: 300px;
+    overflow-y: auto;
+    background: rgba(0,0,0,0.05);
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.logs-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.logs-details summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logs-details summary::after {
+    content: "▼";
+    font-size: 0.8rem;
+    transition: transform 0.2s;
+}
+
+.logs-details[open] summary::after {
+    transform: rotate(180deg);
+}
+
+.metric-card {
+    background: rgba(0,0,0,0.02);
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    min-width: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.metric-value { font-size: 1.2rem; font-weight: 700; color: var(--primary-color); order: 2; }
+.metric-label { font-size: 0.85rem; opacity: 0.8; font-weight: 600; order: 1; }
+
+.gantt-container { margin: 24px 0; overflow-x: auto; }
+.gantt-chart { display: flex; height: 50px; border: 1px solid var(--border-color); border-radius: 4px; }
+.gantt-block { display: flex; align-items: center; justify-content: center; height: 100%; color: white; font-weight: bold; font-size: 0.8rem; position: relative; min-width: 20px; }
+.gantt-time-scale { display: flex; position: relative; height: 20px; margin-top: 5px; }
+.time-marker { position: absolute; font-size: 0.7rem; transform: translateX(-50%); }
+
+.best-algo { background-color: rgba(34, 197, 94, 0.1); border: 2px solid var(--success-color) !important; }
+.info-icon { display: inline-block; width: 14px; height: 14px; background: var(--secondary-color); color: white; border-radius: 50%; text-align: center; font-size: 10px; cursor: help; }
