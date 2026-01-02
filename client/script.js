@@ -40,8 +40,24 @@ function addRow(at = 0, bt = 5, prio = 1) {
 function reindex() { Array.from(processBody.children).forEach((r, i) => r.cells[0].innerText = `P${i+1}`); }
 
 function updateExplanation() {
-    const info = ALGO_INFO[document.getElementById('algorithm-select').value];
+    const algo = document.getElementById('algorithm-select').value;
+    const tqGroup = document.getElementById('time-quantum-group');
+    const tqInput = document.getElementById('time-quantum');
+    const info = ALGO_INFO[algo];
+    
     document.getElementById('algorithm-explanation').innerHTML = `<strong>${info.name}</strong> (${info.preemptive ? 'P' : 'NP'}): ${info.desc} <em>${info.use}</em>`;
+    
+    if (algo === 'ROUND_ROBIN') {
+        tqGroup.style.display = 'flex';
+        tqInput.required = true;
+        tqInput.disabled = false;
+        if (!tqInput.value) tqInput.value = 2;
+    } else {
+        tqGroup.style.display = 'none';
+        tqInput.required = false;
+        tqInput.disabled = true;
+        tqInput.value = ''; 
+    }
 }
 
 function getInputs() {
@@ -71,7 +87,7 @@ function solve(algo, procs, tq = 2) {
         if (algo === 'FCFS') p = available.sort((a,b) => a.at - b.at)[0];
         else if (algo === 'SJF_NON_PREEMPTIVE') p = available.sort((a,b) => a.rem - b.rem || a.at - b.at)[0];
         else if (algo === 'PRIORITY_NON_PREEMPTIVE') p = available.sort((a,b) => a.priority - b.priority || a.at - b.at)[0];
-        else if (algo === 'ROUND_ROBIN') p = available[0]; // RR handles queue differently usually but simplified here
+        else if (algo === 'ROUND_ROBIN') p = available[0];
         else p = available.sort((a,b) => (algo.includes('SJF') ? a.rem - b.rem : a.priority - b.priority) || a.at - b.at)[0];
 
         if (lastPid && lastPid !== p.pid) cs++;
@@ -88,7 +104,6 @@ function solve(algo, procs, tq = 2) {
         }
         
         if (algo === 'ROUND_ROBIN' && p.rem > 0) {
-            // Push to end of arrival list for simplicity
             procs.push(procs.splice(procs.indexOf(p), 1)[0]);
         }
     }
@@ -116,69 +131,6 @@ function runSimulation() {
 
     const res = solve(algo, procs, tq);
     render(res);
-}
-
-function updateExplanation() {
-    const algo = document.getElementById('algorithm-select').value;
-    const tqGroup = document.getElementById('time-quantum-group');
-    const tqInput = document.getElementById('time-quantum');
-    const info = ALGO_INFO[algo];
-    
-    document.getElementById('algorithm-explanation').innerHTML = `<strong>${info.name}</strong> (${info.preemptive ? 'P' : 'NP'}): ${info.desc} <em>${info.use}</em>`;
-    
-    if (algo === 'ROUND_ROBIN') {
-        tqGroup.style.display = 'flex';
-        tqInput.required = true;
-        tqInput.disabled = false;
-        if (!tqInput.value) tqInput.value = 2;
-    } else {
-        tqGroup.style.display = 'none';
-        tqInput.required = false;
-        tqInput.disabled = true;
-        tqInput.value = ''; 
-    }
-}
-
-// Listeners
-document.getElementById('add-process-btn').onclick = () => addRow();
-document.getElementById('simulate-btn').onclick = runSimulation;
-document.getElementById('reset-btn').onclick = reset;
-document.getElementById('theme-toggle').onclick = () => document.body.classList.toggle('dark-mode');
-document.getElementById('algorithm-select').onchange = updateExplanation;
-updateExplanation(); 
-
-
-// Replay Logic
-let currentStep = 0;
-let replayGantt = [];
-
-function setupSlider(gantt) {
-    const sliderContainer = document.getElementById('slider-container');
-    if (!sliderContainer) return;
-    
-    const slider = document.getElementById('replay-slider');
-    slider.max = gantt.length - 1;
-    slider.value = 0;
-    replayGantt = gantt;
-    
-    slider.oninput = (e) => {
-        const step = parseInt(e.target.value);
-        updateReplay(step);
-    };
-}
-
-function updateReplay(step) {
-    const ganttSlice = replayGantt.slice(0, step + 1);
-    const lastBlock = replayGantt[step];
-    
-    // Update visualization
-    renderGanttChart(ganttSlice, replayGantt[replayGantt.length-1].end);
-    
-    // Update logs highlight
-    const logEntries = logsEl.children;
-    Array.from(logEntries).forEach((el, i) => {
-        el.style.opacity = i <= step ? '1' : '0.3';
-    });
 }
 
 function render(res) {
@@ -215,8 +167,6 @@ function render(res) {
 
     // Logs
     logsEl.innerHTML = res.logs.map(l => `<div>${l}</div>`).join('');
-    
-    setupSlider(res.gantt);
 }
 
 function renderGanttChart(ganttData, total) {
@@ -241,7 +191,6 @@ function renderGanttChart(ganttData, total) {
         ganttTimeScale.appendChild(endMarker);
     });
 }
-
 
 function reset() { simulationResults.style.display = 'none'; processBody.innerHTML = ''; addRow(0, 5); addRow(1, 3); }
 
